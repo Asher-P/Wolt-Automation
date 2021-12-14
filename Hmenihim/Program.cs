@@ -11,7 +11,9 @@ namespace Hmenihim
     {
         static void Main(string[] args)
         {
+            //Change the Path according your chrome User Data location
             string chromeUserDataPath = "C:/Users/אשר/AppData/Local/Google/Chrome/User Data";
+            
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--disable-web-security");
             options.AddArgument($"--user-data-dir={chromeUserDataPath}");
