@@ -12,21 +12,21 @@ namespace Hmenihim
         static void Main(string[] args)
         {
             //Change the Path according your chrome User Data location
-            string chromeUserDataPath = "C:/Users/אשר/AppData/Local/Google/Chrome/User Data";
+            string chromeUserDataPath = "C:/Users/asher.p/AppData/Local/Google/Chrome/User Data";
             
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--disable-web-security");
             options.AddArgument($"--user-data-dir={chromeUserDataPath}");
             options.AddArgument("--allow-running-insecure-content");
             var Driver = new ChromeDriver(Path.Combine(Directory.GetCurrentDirectory(), "../../../"), options);
-            Driver.Manage().Window.Maximize();
+            //Driver.Manage().Window.Maximize();
             Driver.Navigate().GoToUrl("https://wolt.com/he/");
 
             try
             {
                 try
                 {
-                    IWebElement cookies = Driver.FindElement(By.XPath("//*[@id=\"app\"]/div/div/div[2]/div[3]/div/div/div/button[2]"));
+                    IWebElement cookies = Driver.FindElement(By.CssSelector("div[class='Button__Content-sc-a3fg5q-3 cCtovS']"));
                     cookies.Click();
                 }
                 catch (Exception)
@@ -46,28 +46,34 @@ namespace Hmenihim
             catch (Exception)
             {
                 Console.WriteLine("Logged In");
-                IWebElement search = Driver.FindElement(By.Id("SearchInputAnimated-input-id"));
+                IWebElement search = Driver.FindElement(By.CssSelector("input[class='SearchInput__Input-sc-1up9knj-2 ftBRqC']"));
                 search.SendKeys("gift card");
                 Thread.Sleep(1500);
-                List<IWebElement> searchResults = new List<IWebElement>(Driver.FindElements(By.CssSelector("a[class='SearchResultItem__RootLink-sc-1psi1os-9 bOImtc']")));
-                var GiftCard = searchResults.Find(r => r.FindElement(By.CssSelector("div[class='SearchResultItem__Name-sc-1psi1os-4 hfLbQE']")).Text == "Wolt Gift Card");
+                List<IWebElement> searchResults = new List<IWebElement>(Driver.FindElements(By.CssSelector("a[class='SearchResultItem__RootLink-sc-wb236u-9 dASHKL']")));
+                var GiftCard = searchResults.Find(r => r.FindElement(By.CssSelector("div[class='SearchResultItem__Name-sc-wb236u-4 fckXxu']")).Text == "Wolt Gift Card");
                 GiftCard.Click();
                 Thread.Sleep(2500);
-                var giftCards = new List<IWebElement>(Driver.FindElements(By.CssSelector("div[class='MenuItem-module__contentBorderContainer___kdCha MenuItem-module__hasImage___AnMY4']")));
+                var giftCards = new List<IWebElement>(Driver.FindElements(By.CssSelector("div[class='MenuItem-module__itemContainer____1T8k']")));
                 IWebElement GiftCard40 = giftCards.Find(gc => gc.FindElement(By.CssSelector("p[class='MenuItem-module__name___iqvnU']")).Text == "‫גיפט קארד - 40 ₪");
                 GiftCard40.Click();
                 Thread.Sleep(800);
-                var AddToCart = Driver.FindElement(By.XPath("/html/body/div[11]/div/aside/footer/div[2]/div/div/div[2]/button/div[3]"));
+                var AddToCart = Driver.FindElement(By.CssSelector("button[class='Button__Root-sc-a3fg5q-2 kjNIeb ProductViewFooter__FooterButton-sc-xe19rn-4 bvtgDZ']"));
                 AddToCart.Click();
                 Thread.Sleep(2000);
-                var GoToPay = Driver.FindElement(By.XPath("//*[@id=\"mainContent\"]/div/div[2]/div/div[3]/div/button"));
+                var GoToPay = Driver.FindElement(By.CssSelector("button[class='Button__Root-sc-a3fg5q-2 kjNIeb']"));
                 GoToPay.Click();
+                var gotopay = Driver.FindElement(By.CssSelector(
+	                "button[class='Button__Root-sc-a3fg5q-2 kjNIeb CartViewModal__FooterNextStepButton-sc-1c8ky8o-4 cgOWHa']"));
+                gotopay.Click();
                 //var orderData = new List<IWebElement>(Driver.FindElements(By.CssSelector("a[class='ListItem__RootLinkRoot-sc-1fgc907-0 gWhpUd ListItem-module__container___jS788 ListItem-module__rootLink___M3yRn ListItem-module__rootLink___M3yRn']")));
                 var extendPayOptions = Driver.FindElement((By.CssSelector("svg[class='PaymentMethods-module__paymentMethodIcon___wExTL']")));
                 extendPayOptions.Click();
                 Thread.Sleep(1200);
                 var cibusOption = Driver.FindElement(By.CssSelector("path[d='M23.54 0h11.77v49.8H23.54z']"));
                 cibusOption.Click();
+                var pay = Driver.FindElement(By.CssSelector(
+	                "button[class='SendOrderButton-module__orderButton___ogLN1 SendOrderButton-module__interactable___nzvdR'"));
+                pay.Click();
             }
             Console.WriteLine("Logged In");
 
