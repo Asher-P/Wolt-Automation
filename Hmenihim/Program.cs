@@ -54,7 +54,7 @@ namespace Hmenihim
                 GiftCard.Click();
                 Thread.Sleep(2500);
                 var giftCards = new List<IWebElement>(Driver.FindElements(By.CssSelector("div[class='MenuItem-module__itemContainer____1T8k']")));
-                IWebElement GiftCard40 = giftCards.Find(gc => gc.FindElement(By.CssSelector("p[class='MenuItem-module__name___iqvnU']")).Text == "‫גיפט קארד - 40 ₪");
+                IWebElement GiftCard40 = giftCards.Find(gc => gc.FindElement(By.CssSelector("p[class='MenuItem-module__name___iqvnU']")).Text == "‫גיפט קארד - 30 ₪");
                 GiftCard40.Click();
                 Thread.Sleep(800);
                 var AddToCart = Driver.FindElement(By.CssSelector("button[class='Button__Root-sc-a3fg5q-2 kjNIeb ProductViewFooter__FooterButton-sc-xe19rn-4 bvtgDZ']"));
@@ -65,6 +65,7 @@ namespace Hmenihim
                 var gotopay = Driver.FindElement(By.CssSelector(
 	                "button[class='Button__Root-sc-a3fg5q-2 kjNIeb CartViewModal__FooterNextStepButton-sc-1c8ky8o-4 cgOWHa']"));
                 gotopay.Click();
+                Thread.Sleep(1000);
                 //var orderData = new List<IWebElement>(Driver.FindElements(By.CssSelector("a[class='ListItem__RootLinkRoot-sc-1fgc907-0 gWhpUd ListItem-module__container___jS788 ListItem-module__rootLink___M3yRn ListItem-module__rootLink___M3yRn']")));
                 var extendPayOptions = Driver.FindElement((By.CssSelector("svg[class='PaymentMethods-module__paymentMethodIcon___wExTL']")));
                 extendPayOptions.Click();
@@ -74,6 +75,10 @@ namespace Hmenihim
                 var pay = Driver.FindElement(By.CssSelector(
 	                "button[class='SendOrderButton-module__orderButton___ogLN1 SendOrderButton-module__interactable___nzvdR'"));
                 pay.Click();
+                Thread.Sleep(2000);
+                var frame = Driver.SwitchTo().Frame("cibus-frame");
+                var acceptCibusPay = Driver.FindElement(By.Id("pnlBtnPay"));
+                acceptCibusPay.Click();
             }
             Console.WriteLine("Logged In");
 
