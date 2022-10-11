@@ -3,6 +3,7 @@ using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 namespace Hmenihim
@@ -10,14 +11,17 @@ namespace Hmenihim
     class Program
     {
         static void Main(string[] args)
-        {
-            //Change the Path according your chrome User Data location
-            string chromeUserDataPath = "C:/Users/asher.p/AppData/Local/Google/Chrome/User Data";
-            
-            ChromeOptions options = new ChromeOptions();
+		{
+			//Change the Path according your chrome User Data location
+			string chromeUserDataPath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Google/Chrome/User Data")
+				.Replace("\\","/").Replace("Roaming","Local");
+
+
+			ChromeOptions options = new ChromeOptions();
             options.AddArgument("--disable-web-security");
             options.AddArgument($"--user-data-dir={chromeUserDataPath}");
             options.AddArgument("--allow-running-insecure-content");
+            var s = Path.Combine(Directory.GetCurrentDirectory(), "../../../");
             var Driver = new ChromeDriver(Path.Combine(Directory.GetCurrentDirectory(), "../../../"), options);
             //Driver.Manage().Window.Maximize();
             Driver.Navigate().GoToUrl("https://wolt.com/he/");
